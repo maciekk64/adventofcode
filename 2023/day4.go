@@ -47,25 +47,26 @@ func countPoints(line string) (points int) {
 	return
 }
 
-func day4part2() int {
-	input := strings.Split(readInput("in/day4.in"), "\n")
-	sum := 0
-	points := map[int]int{}
-	for i, line := range input {
-		points[i] = countPoints(line)
-	}
+var (
+	input  = strings.Split(readInput("in/day4.in"), "\n")
+	points = make(map[int]int)
+)
 
+func day4part2() (sum int) {
 	for i := range input {
-		sum += scratch(points, i)
+		sum += scratch(i)
 	}
-
-	return sum
+	return
 }
 
-func scratch(points map[int]int, start int) int {
-	sum := 1
-	for i := 0; i < points[start]; i++ {
-		sum += scratch(points, start+i+1)
+func scratch(start int) int {
+	if points[start] == 0 {
+		sum := 1
+		for i := 0; i < countPoints(input[start]); i++ {
+			sum += scratch(start + i + 1)
+		}
+		points[start] = sum
 	}
-	return sum
+
+	return points[start]
 }
