@@ -1,23 +1,25 @@
 package main
 
 import (
-	"slices"
+	"math"
 	"strconv"
 	"strings"
 )
 
 func day5part1() int {
 	seeds, numbers := parseInput5()
-	var locations []int
+	location := math.MaxInt
 
 	for _, seed := range seeds {
 		thing := seed
 		for _, v := range numbers {
 			thing = convertThingToTheNextThing(thing, v)
 		}
-		locations = append(locations, thing)
+		if thing < location {
+			location = thing
+		}
 	}
-	return slices.Min(locations)
+	return location
 }
 
 func parseInput5() ([]int, [7][][]int) {
@@ -60,7 +62,7 @@ func convertThingToTheNextThing(number int, maps [][]int) int {
 
 func day5part2() int {
 	seeds, numbers := parseInput5()
-	var locations []int
+	location := math.MaxInt
 
 	for i := 0; i < len(seeds); i += 2 {
 		seed := seeds[i]
@@ -71,9 +73,11 @@ func day5part2() int {
 			for _, v := range numbers {
 				thing = convertThingToTheNextThing(thing, v)
 			}
-			locations = append(locations, thing)
+			if thing < location {
+				location = thing
+			}
 		}
 	}
 
-	return slices.Min(locations)
+	return location
 }
