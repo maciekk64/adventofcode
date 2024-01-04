@@ -15,5 +15,5 @@ func readInput(filename string) string {
 }
 
 func main() {
-	fmt.Println(day9part2())
+	fmt.Println(day10())
 }
